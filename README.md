@@ -48,14 +48,10 @@ As a starting point, our new mode inherits all of the keybindings from Normal mo
 (define-key evil-paredit-state-map "f" 'paredit-forward)                 ;; C-M-f    paredit-forward
 (define-key evil-paredit-state-map "b" 'paredit-backward)                ;; C-M-b    paredit-backward
 (define-key evil-paredit-state-map "d" 'paredit-forward-down)            ;; C-M-d    paredit-forward-down
-(define-key evil-paredit-state-map "u" 'paredit-backward-up)             ;; C-M-u    paredit-backward-up
+(define-key evil-paredit-state-map "w" 'paredit-backward-up)             ;; C-M-u    paredit-backward-up
 (define-key evil-paredit-state-map "n" 'paredit-forward-up)              ;; C-M-n    paredit-forward-up
 (define-key evil-paredit-state-map "gp" 'paredit-backward-down)          ;; C-M-p    paredit-backward-down
-(define-key evil-paredit-state-map "a" 'beginning-of-defun)              ;; C-M-a    beginning-of-defun
-
-;; Alternate Undo
-
-(define-key evil-paredit-state-map "gu" 'evil-undo)           
+(define-key evil-paredit-state-map "q" 'beginning-of-defun)              ;; C-M-a    beginning-of-defun
 
 ;; Slurp / Barf
 
@@ -70,7 +66,7 @@ As a starting point, our new mode inherits all of the keybindings from Normal mo
 (define-key evil-paredit-state-map "gl" 'paredit-splice-sexp)            ;; M-s      paredit-splice-sexp
 (define-key evil-paredit-state-map "gw" 'paredit-wrap-round)             ;; M-(      Paredit Wrap Around
 (define-key evil-paredit-state-map "gh" 'paredit-recenter-on-sexp) 
-(define-key evil-paredit-state-map "g/" 'paredit-reindent-defun)
+(define-key evil-paredit-state-map "gn" 'indent-region)
 ```
 
 Note that the movement command above accept numeric prefix arguments. For example, we can move 4 sexps forward with `4f`.
@@ -158,8 +154,8 @@ Key  | Paredit State                 | Normal State    | Notes (mostly against N
 `f`  | `paredit-forward`             | `evil-find-char`| paredit-forward is much more important in this context
 `b`  | `paredit-backward`            | `evil-backward-word-begin` | Its natural to think of b as a sexp movement vs. a word movement
 `d`  | `paredit-forward-down`        | `evil-delete` | Deletion is fraught in Structured Editing, so I was okay with overriding it
-`u`  | `paredit-backward-up`         | `evil-undo` | This was a very difficult decision, ultimately I (currently) felt that moving up sexps is more important
-`a`  | `beginning-of-defun`          | `evil-append` | Given Paredit State's cursor movement functions more like insert state, append isn't that necessary IMO
+`w`  | `paredit-backward-up`         | `evil-undo` | This was a very difficult decision, ultimately I (currently) felt that moving up sexps is more important
+`q`  | `beginning-of-defun`          | `evil-append` | Given Paredit State's cursor movement functions more like insert state, append isn't that necessary IMO
 `gn` | `paredit-forward-up`          | `evil-next-match` | I guess these means searching is better done in Normal mode, which sort of makes sense. Paredit state is more for manipulating sexps than for searching through them
 `gp` | `paredit-backward-down`       | Unbound | Free keybinding, so nothing to worry :-)
 `gu` | `evil-undo`                   | `evil-downcase` | Downcasing is probably not that relevant of a command within sexp manipulation, and it would be good to have undo in Paredit State 
@@ -171,7 +167,7 @@ Key  | Paredit State                 | Normal State    | Notes (mostly against N
 `gl` | `paredit-splice-sexp`         | Unbound | Nice! :-)
 `gw` | `paredit-wrap-round`          | `evil-fill` | I have no idea what this does...
 `gh` | `paredit-recenter-on-sexp`    | Unbound | Awesome! :-)
-`g/` | `paredit-reindent-defun`      | Unbound | Fantastic! :-)
+`gn` | `paredit-reindent-defun`      | Unbound | Fantastic! :-)
 `t`  | `transpose-sexps`             | `evil-find-char-to` | Not too fussed about this one as searching should be done in normal mode
 `T`  | `transpose-sexps -1`          | `evil-find-char-to-backward` | Refer above
 `s`  | `Custom Sexp Cut`             | `evil-substitute` | This might be tricky, but for now I am okay (YMMV)
