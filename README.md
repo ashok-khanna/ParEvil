@@ -36,6 +36,9 @@ Modifying the standard bindings of VIM would be a foolish endeavour, and we will
 (define-key evil-paredit-state-map (kbd "SPC") (lambda () (interactive) (evil-normal-state)))
 (define-key evil-normal-state-map (kbd "SPC") (lambda () (interactive) (evil-paredit-state)))
 ```
+
+
+
 ## Standard Keybindings
 As a starting point, our new mode inherits all of the keybindings from Normal mode. We then introduce the following bindings specific for ParEdit commands.
 
@@ -57,19 +60,27 @@ As a starting point, our new mode inherits all of the keybindings from Normal mo
 ```
 
 
-
+Note that the movement command above accept numeric prefix arguments. For example, we can move 4 sexps forward with `4f`.
 
 
 ## Additional Features
-Perhaps somewhat lesser known is that a reasonable amount of structural editing commands are actually built directly into Emacs[^10]. We add the following keybindings to the above mix.
+Perhaps somewhat lesser known is that a reasonable amount of structural editing commands are actually built directly into Emacs[^10]. We add the following keybindings to the above mix for transposing sexps.
 
 ```lisp
+;; A numeric prefix argument serves as a repeat count, moving the previous
+;; expression over that many following ones. A negative argument moves the
+;; previous balanced expression backwards across those before it. An argument
+;; of zero, rather than doing nothing, transposes the balanced expressions
+;; ending at or after point and the mark.
 
+(define-key evil-paredit-state-map "t" 'transpose-sexps)
 
+;; For convenience, a reverse transpose can be achieved with T:
 
+(define-key evil-paredit-state-map "T" (lambda () (interactive) (transpose-sexps -1)))
 ```
 
-We also modify cut / copy / paste with the following to allow for single keystroke cuts & copies and also to fix the paste behaviour due to working before/after point (in paredit state) vs. on point (in normal mode).
+We also modify cut / copy / paste with the following to allow for single keystroke cuts & copies and also to fix the paste behaviour due to working before/after point (in paredit state) vs. on point (in normal mode). Note that we can cut / copy multiple lines with numeric prefixes such as `3s` and `3y` to cut or copy 3 lines respectively.
 
 ```lisp
 ;; Single Keystroke Cut
