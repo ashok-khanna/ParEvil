@@ -64,14 +64,10 @@ Note that the movement command above accept numeric prefix arguments. For exampl
 
 
 ## Additional Features
-Perhaps somewhat lesser known is that a reasonable amount of structural editing commands are actually built directly into Emacs[^10]. We add the following keybindings to the above mix for transposing sexps.
+Perhaps somewhat lesser known is that a reasonable amount of structural editing commands are actually built directly into Emacs[^10]. We add the following keybindings to the above mix for transposing sexps. An argument to `transpose-sexp` serves as a repeat count, moving the previous expression over that many following ones. A negative argument moves the previous balanced expression backwards across those before it. An argument of zero, rather than doing nothing, transposes the balanced expressions ending at or after point and the mark.
 
 ```lisp
-;; A numeric prefix argument serves as a repeat count, moving the previous
-;; expression over that many following ones. A negative argument moves the
-;; previous balanced expression backwards across those before it. An argument
-;; of zero, rather than doing nothing, transposes the balanced expressions
-;; ending at or after point and the mark.
+;; Accepts numeric prefix argument
 
 (define-key evil-paredit-state-map "t" 'transpose-sexps)
 
