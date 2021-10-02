@@ -40,7 +40,7 @@ Modifying the standard bindings of VIM would be a foolish endeavour, and we will
 
 
 ## Standard Keybindings
-As a starting point, our new mode inherits all of the keybindings from Normal mode. We then introduce the following bindings specific for ParEdit commands.
+As a starting point, our new mode inherits all of the keybindings from Normal mode. We then introduce the following bindings specific for common ParEdit commands. Any ParEdit command not listed below can be accessed by its default keybinding.
 
 ```lisp
 ;; Motion Commands
@@ -72,7 +72,6 @@ As a starting point, our new mode inherits all of the keybindings from Normal mo
 (define-key evil-paredit-state-map "gh" 'paredit-recenter-on-sexp) 
 (define-key evil-paredit-state-map "g/" 'paredit-reindent-defun)
 ```
-
 
 Note that the movement command above accept numeric prefix arguments. For example, we can move 4 sexps forward with `4f`.
 
