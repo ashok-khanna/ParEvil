@@ -6,7 +6,7 @@
 
 ParEdit[^1] is one of the oldest and most famous structural editing tools for the Lisp-family of languages, and one that I felt most comfortable with (whether it be its classic design or simply muscle memory). It is perfectly viable for use in Evil Mode, particularly with the assistance of Evil Paredit[^2] to avoid accidental breakage of parentheses parity.
 
-However, key sequences without modifiers feel much more natural in VIM / Evil Mode, and my aim has been to find a set of keybindings that will allow for a more natural integration of ParEdit with Evil Mode. Indeed, whilst there are many other excellent packages which aim to do this (see Lispy[^3], Lispyville[^4], Smartparens[^5], Evil Cleverparens[^6], Symex[^7], and more[^8]), it wouldn't be Emacs if we didn't end up writing our own packages for commonly-solved functionalities.
+However, key sequences without modifiers feel much more natural in VIM / Evil Mode, and my aim has been to find a set of keybindings that will allow for a more natural integration of ParEdit with Evil Mode. Indeed, whilst there are many other excellent packages which aim to do this (see Lispy[^3], Lispyville[^4], Smartparens[^5], Evil Cleverparens[^6], Symex[^7], and more[^8]), it wouldn't be Emacs if we didn't reinvest the wheel and end up writing our own keybinds.
 
 Thus, herein, is my current approach to structural editing within Evil Mode. You can download and load `parevil.el` into your Emacs configuration and feel free to send through any comments & suggestions.
 
@@ -18,7 +18,23 @@ Thus, herein, is my current approach to structural editing within Evil Mode. You
 ```
 
 ## Summary
-ParEvil adds an additional state (***Paredit State***) to Evil Mode, which can be accessed (and exited from) by pressing `spacebar` when within Normal mode. Below are the keybindings offered in ParEdit State.
+ParEvil adds an additional state (***Paredit State***) to Evil Mode, which can be accessed (and exited from) by pressing `spacebar` when within Normal mode. Below are the keybindings offered in Paredit State.
+
+Key  | Function in Paredit State     | Key  | Function in Paredit State 
+---- | ----------------------------- | ---- | ----------
+`f`  | `paredit-forward`             | `(`  | `paredit-backward-slurp-sexp`
+`b`  | `paredit-backward`            | `)`  | `paredit-forward-slurp-sexp`
+`d`  | `paredit-forward-down`        | `{`  | `paredit-backward-barf-sexp`
+`w`  | `paredit-backward-up`         | `}`  | `paredit-forward-barf-sexp`
+`q`  | `beginning-of-defun`          | `gr` | `paredit-raise-sexp`
+`n` | `paredit-forward-up`           | `gl` | `paredit-splice-sexp` 
+`gp` | `paredit-backward-down`       | `gw` | `paredit-wrap-round`
+`gh` | `paredit-recenter-on-sexp`    | `gn` | `indent-region`    
+`t`  | `transpose-sexps`             | `T`  | `transpose-sexps -1`
+`s`  | `Custom Sexp Cut`             | `y`  | `Custom Sexp Copy` 
+`gs` | `Custom Multi Cut`            | `gy` | `Custom Multi Copy` 
+`p`  | `Custom Paste`   
+
 
 ## Introduction
 Modifying the standard bindings of VIM would be a foolish endeavour, and we will not do so as a starting principle. Rather, we create a new mode (***Paredit State***) as follows, which we can toggle from and to Normal Mode by pressing `spacebar`. Note that we only bind `spacebar` within Normal mode for lisp-related major modes, so you are free to bind `spacebar` to something else for other major modes.
@@ -42,21 +58,6 @@ Modifying the standard bindings of VIM would be a foolish endeavour, and we will
   (define-key evil-normal-state-local-map (kbd "SPC") (lambda () (interactive) (evil-paredit-state))))
 
 ```
-
-Key  | Paredit State                 | Key  | Paredit State
----- | ----------------------------- | ---- | ----------
-`f`  | `paredit-forward`             | `(`  | `paredit-backward-slurp-sexp`
-`b`  | `paredit-backward`            | `)`  | `paredit-forward-slurp-sexp`
-`d`  | `paredit-forward-down`        | `{`  | `paredit-backward-barf-sexp`
-`w`  | `paredit-backward-up`         | `}`  | `paredit-forward-barf-sexp`
-`q`  | `beginning-of-defun`          | `gr` | `paredit-raise-sexp`
-`n` | `paredit-forward-up`           | `gl` | `paredit-splice-sexp` 
-`gp` | `paredit-backward-down`       | `gw` | `paredit-wrap-round`
-`gh` | `paredit-recenter-on-sexp`    | `gn` | `indent-region`    
-`t`  | `transpose-sexps`             | `T`  | `transpose-sexps -1`
-`s`  | `Custom Sexp Cut`             | `y`  | `Custom Sexp Copy` 
-`gs` | `Custom Multi Cut`            | `gy` | `Custom Multi Copy` 
-`p`  | `Custom Paste`   
 
 ## Standard Keybindings
 As a starting point, our new mode inherits all of the keybindings from Normal mode. We then introduce the following bindings specific for common ParEdit commands. Any ParEdit command not listed below can be accessed by its default keybinding.
@@ -92,7 +93,7 @@ Note that the movement command above accept numeric prefix arguments. For exampl
 
 
 ## Additional Features
-Perhaps somewhat lesser known is that a reasonable amount of structural editing commands are actually built directly into Emacs[^10]. We add the following keybindings to the above mix for transposing sexps. The trick to transposing is to have your cursor right after an sexp that you wish to transpose with the one before or after it.
+Perhaps somewhat lesser known is that a reasonable amount of structural editing commands are actually built directly into Emacs[^10]. One such command is `transpose-sexps` which we add with the following. The trick to transposing is to have your cursor right after an sexp that you wish to transpose with the one before or after it.
 
 ```lisp
 ;; Accepts numeric prefix argument
