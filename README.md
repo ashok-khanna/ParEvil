@@ -168,7 +168,7 @@ Key  | Paredit State                 | Normal State    | Notes (mostly against N
 `{`  | `paredit-backward-barf-sexp`  | `evil-backward-paragraph`      | Refer above
 `}`  | `paredit-forward-barf-sexp`   | `evil-forward-paragraph`       | Refer above
 `gr` | `paredit-raise-sexp`          | Unbound | Yay! :-)
-`gs` | `paredit-splice-sexp`         | 
+`gl` | `paredit-splice-sexp`         | Unbound | Nice! :-)
 `gw` | `paredit-wrap-round`          | `evil-fill` | I have no idea what this does...
 `gh` | `paredit-recenter-on-sexp`    | Unbound | Awesome! :-)
 `g/` | `paredit-reindent-defun`      | Unbound | Fantastic! :-)
@@ -177,10 +177,8 @@ Key  | Paredit State                 | Normal State    | Notes (mostly against N
 `s`  | `Custom Sexp Cut`             | `evil-substitute` | This might be tricky, but for now I am okay (YMMV)
 `y`  | `Custom Sexp Copy`            | `evil-yank` | Here we are substituting yank with a more appropriate one for sexps
 `p`  | `Custom Paste`                | `evil-paste-afer` | Similarly we are substituting for a more appropriate sexp paste
-`gs` | `Custom Multi-Cut`            | 
-`gy` | `Custom Multi-Copy`           |
-
-
+`gs` | `Custom Multi-Cut`            | Unbound | We actually make this a command for both paredit and normal states
+`gy` | `Custom Multi-Copy`           | Unbound | Refer above
 
 
 ## Reliance on Evil Paredit
