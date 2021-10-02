@@ -17,7 +17,7 @@ Thus, herein, is my current approach to structural editing within Evil Mode. You
 (load "/path-to-parevil/parevil.el)
 ```
 
-# Introduction
+## Introduction
 Modifying the standard bindings of VIM would be a foolish endeavour, and we will not do so as a starting principle. Rather, we create a new mode (***Paredit State***) as follows, which we can toggle from and to Normal Mode by pressing `spacebar`.
 
 ```lisp
@@ -36,23 +36,31 @@ Modifying the standard bindings of VIM would be a foolish endeavour, and we will
 (define-key evil-paredit-state-map (kbd "SPC") (lambda () (interactive) (evil-normal-state)))
 (define-key evil-normal-state-map (kbd "SPC") (lambda () (interactive) (evil-paredit-state)))
 ```
-# Keybindings
+## Standard Keybindings
 As a starting point, our new mode inherits all of the keybindings from Normal mode. We then introduce the following bindings specific for ParEdit commands.
 
 ```lisp
-
+(define-key evil-paredit-state-map "f" 'paredit-forward)                       ;; C-M-f    paredit-forward
+(define-key evil-paredit-state-map "b" 'paredit-backward)                      ;; C-M-b    paredit-backward
+(define-key evil-paredit-state-map "d" 'paredit-forward-down)                  ;; C-M-d    paredit-forward-down
+(define-key evil-paredit-state-map "w" 'paredit-backward-up)                   ;; C-M-u    paredit-backward-up
+(define-key evil-paredit-state-map "n" 'paredit-forward-up)                    ;; C-M-n    paredit-forward-up
+(define-key evil-paredit-state-map "gp" 'paredit-backward-down)                ;; C-M-p    paredit-backward-down     
+(define-key evil-paredit-state-map "(" 'paredit-backward-slurp-sexp)           ;; C-(      paredit-backward-slurp-sexp    
+(define-key evil-paredit-state-map ")" 'paredit-forward-slurp-sexp)            ;; C-)      paredit-forward-slurp-sexp
+(define-key evil-paredit-state-map "{" 'paredit-backward-barf-sexp)            ;; C-{      paredit-backward-barf-sexp
+(define-key evil-paredit-state-map "}" 'paredit-forward-barf-sexp)             ;; C-}      paredit-forward-barf-sexp
+(define-key evil-paredit-state-map "q" 'beginning-of-defun)                    ;; C-M-a    beginning-of-defun
+(define-key evil-paredit-state-map "gr" 'paredit-wrap-round)                   ;; M-(      Paredit Wrap Around
+(define-key evil-paredit-state-map "J" 'paredit-join-sexps)                    ;; M-J      Paredit Join Sexps
+(define-key evil-paredit-state-map "gs" 'paredit-split-sexp)                   ;; M-S      Paredit Split Sexps
 ```
 
 
-# Comparing vs. Normal Mode - What did we break?
-The above keybindings override the Normal mode keybindings when in Paredit State. Whilst that is not too much an issue as normal mode is simply one `spacebar` away, it is prudent to review what we are overriding. Below is my current reasoning for each override.
-
-Key | Paredit State | Normal State | Notes
---- | ------------- | ------------ | ----------
-`f` | `paredit-forward` | `find-char`| find-char is not that commonly used vs. paredit-forward
 
 
-# Additional Features
+
+## Additional Features
 Perhaps somewhat lesser known is that a reasonable amount of structural editing commands are actually built directly into Emacs[^10]. We add the following keybindings to the above mix.
 
 ```lisp
@@ -61,9 +69,76 @@ Perhaps somewhat lesser known is that a reasonable amount of structural editing 
 
 ```
 
+We also modify cut / copy / paste with the following to allow for single keystroke cuts & copies and also to fix the paste behaviour due to working before/after point (in paredit state) vs. on point (in normal mode).
+
+```lisp
+;; Single Keystroke Cut
+
+(define-key evil-paredit-state-map "s"
+  (lambda (arg)
+    (interactive "p")
+    (mark-sexp arg)
+    (kill-region (mark) (point) 'region)))
+
+;; Single Keystroke Copy
+
+(define-key evil-paredit-state-map "y"
+  (lambda (arg)
+    (interactive "p")
+    (mark-sexp arg)
+    (kill-ring-save (mark) (point) 'region)
+    (message "Copied sexps")))  
+
+;; Fix pasting in evil-paredit-state
+
+(define-key evil-paredit-state-map "p"
+  (lambda ()
+    (interactive)
+    (evil-paste-before 1)
+    (forward-char 1)))
+```
 
 
-# Reliance on Evil Paredit
+Finally, we have added the following new functions to cut / copy all expressions within a group (from the cursor onwards). These hopefully should work okay, but let me know any unintended behaviour.
+
+```lisp
+;; Cut all remaining expressions in a group
+
+(define-key evil-normal-state-map "gs"
+  (lambda ()
+    (interactive)
+    (let ((starting-point (point))
+	  (ending-point nil))
+      (save-excursion
+	(paredit-backward-up)
+	(evil-jump-item)
+	(setq ending-point (point)))
+      (kill-region starting-point ending-point))))
+
+;; Copy all remaining expressions in a group
+
+(define-key evil-normal-state-map "gy"
+  (lambda ()
+    (interactive)
+    (let ((starting-point (point))
+	  (ending-point nil))
+      (save-excursion
+     	(paredit-backward-up)
+	(evil-jump-item)
+	(setq ending-point (point)))
+      (kill-ring-save starting-point ending-point))))
+```
+
+
+## Comparing vs. Normal Mode - What did we break?
+The above keybindings override the Normal mode keybindings when in Paredit State. Whilst that is not too much an issue as normal mode is simply one `spacebar` away, it is prudent to review what we are overriding. Below is my current reasoning for each override.
+
+Key | Paredit State | Normal State | Notes
+--- | ------------- | ------------ | ----------
+`f` | `paredit-forward` | `find-char`| find-char is not that commonly used vs. paredit-forward
+
+
+## Reliance on Evil Paredit
 Finally, it is useful to maintain reliance on Evil Paredit to provide some safety against accidentally breaking balanced parantheses whilst in Normal / Paredit State.
 
 ```lisp
