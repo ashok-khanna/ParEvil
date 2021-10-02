@@ -18,7 +18,7 @@ Thus, herein, is my current approach to structural editing within Evil Mode. You
 ```
 
 # Introduction
-Modifying the standard bindings of VIM would be a foolish endeavour, and we will not do so as a starting principle. Rather, we create a new mode (**Paredit State**) as follows, which we can toggle from and to Normal Mode by pressing `spacebar`.
+Modifying the standard bindings of VIM would be a foolish endeavour, and we will not do so as a starting principle. Rather, we create a new mode (***Paredit State***) as follows, which we can toggle from and to Normal Mode by pressing `spacebar`.
 
 ```lisp
 ;; Define Paredit State
