@@ -68,7 +68,7 @@ Finally, it is useful to maintain reliance on Evil Paredit to provide some safet
 (add-hook 'slime-repl-mode-hook 'evil-paredit-mode)
 ```
 
-But don't worry, Evil Paredit and all of the above code has been bundled into `parevil.el`, and you simply need to add the below to your `.emacs` after downloading ParEvil to use it.
+All of the above code has been bundled into `parevil.el`, and you simply need to add the below to your `.emacs` after downloading ParEvil to use it.
 
 ```lisp
 ;; Add the below to your .emacs to use ParEvil and then evaluate it
