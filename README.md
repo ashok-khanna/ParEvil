@@ -67,7 +67,7 @@ As a starting point, our new mode inherits all of the keybindings from Normal mo
 ;; Other Commands
 
 (define-key evil-paredit-state-map "gr" 'paredit-raise-sexp)             ;; M-r      paredit-raise-sexp
-(define-key evil-paredit-state-map "gs" 'paredit-splice-sexp)            ;; M-s      paredit-splice-sexp
+(define-key evil-paredit-state-map "gl" 'paredit-splice-sexp)            ;; M-s      paredit-splice-sexp
 (define-key evil-paredit-state-map "gw" 'paredit-wrap-round)             ;; M-(      Paredit Wrap Around
 (define-key evil-paredit-state-map "gh" 'paredit-recenter-on-sexp) 
 (define-key evil-paredit-state-map "g/" 'paredit-reindent-defun)
