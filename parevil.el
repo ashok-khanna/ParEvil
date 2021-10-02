@@ -243,7 +243,7 @@ of the block."
 (define-key evil-paredit-state-map "w" 'paredit-backward-up)             ;; C-M-u    paredit-backward-up
 (define-key evil-paredit-state-map "n" 'paredit-forward-up)              ;; C-M-n    paredit-forward-up
 (define-key evil-paredit-state-map "gp" 'paredit-backward-down)          ;; C-M-p    paredit-backward-down
-(define-key evil-paredit-state-map "a" 'beginning-of-defun)              ;; C-M-a    beginning-of-defun
+(define-key evil-paredit-state-map "q" 'beginning-of-defun)              ;; C-M-a    beginning-of-defun
 
 ;; Slurp / Barf
 
@@ -258,7 +258,7 @@ of the block."
 (define-key evil-paredit-state-map "gl" 'paredit-splice-sexp)            ;; M-s      paredit-splice-sexp
 (define-key evil-paredit-state-map "gw" 'paredit-wrap-round)             ;; M-(      Paredit Wrap Around
 (define-key evil-paredit-state-map "gh" 'paredit-recenter-on-sexp) 
-(define-key evil-paredit-state-map "g/" 'paredit-reindent-defun)
+(define-key evil-paredit-state-map "gn" 'indent-region)
 
 ;; Transpose Sexps
 
