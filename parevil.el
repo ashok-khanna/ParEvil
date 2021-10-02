@@ -3,6 +3,15 @@
 (require 'evil)
 (require 'paredit)
 
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of Lisp code." t) ;; Load Paredit (?)
+(add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)                                   ;; Enable Paredit for Elisp Editing
+(add-hook 'lisp-mode-hook             'enable-paredit-mode)                                   ;; Enable Paredit for CL Editing
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)                                   ;; Enable Paredit for Lisp Interaction Mode
+(add-hook 'scheme-mode-hook           'enable-paredit-mode)                                   ;; Enable Paredit for Scheme Editing
+(add-hook 'slime-repl-mode-hook (lambda () (paredit-mode +1)))                                ;; Enable Paredit for Slime REPL
+(add-hook 'eval-expression-minibuffer-setup-hook #'enable-paredit-mode)                       ;; Enable Paredit for Minibuffer
+
+
 ;;;; Part A -- Evil Paredit Code
 
 
