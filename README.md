@@ -56,7 +56,7 @@ Perhaps somewhat lesser known is that a reasonable amount of structural editing 
 
 
 # Reliance on Evil Paredit
-Finally, it is useful to maintain reliance on Evil Paredit to provide some safety against accidentally breaking balanced parantheses whilst in Normal / Paredit State. We do that with the below (noting that you need to also download the Evil Paredit package if you are building your bindings from scratch).
+Finally, it is useful to maintain reliance on Evil Paredit to provide some safety against accidentally breaking balanced parantheses whilst in Normal / Paredit State.
 
 ```lisp
 (load "/path-to-evil-paredit/evil-paredit.el")
