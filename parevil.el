@@ -240,14 +240,10 @@ of the block."
 (define-key evil-paredit-state-map "f" 'paredit-forward)                 ;; C-M-f    paredit-forward
 (define-key evil-paredit-state-map "b" 'paredit-backward)                ;; C-M-b    paredit-backward
 (define-key evil-paredit-state-map "d" 'paredit-forward-down)            ;; C-M-d    paredit-forward-down
-(define-key evil-paredit-state-map "u" 'paredit-backward-up)             ;; C-M-u    paredit-backward-up
+(define-key evil-paredit-state-map "w" 'paredit-backward-up)             ;; C-M-u    paredit-backward-up
 (define-key evil-paredit-state-map "n" 'paredit-forward-up)              ;; C-M-n    paredit-forward-up
 (define-key evil-paredit-state-map "gp" 'paredit-backward-down)          ;; C-M-p    paredit-backward-down
 (define-key evil-paredit-state-map "a" 'beginning-of-defun)              ;; C-M-a    beginning-of-defun
-
-;; Alternate Undo
-
-(define-key evil-paredit-state-map "gu" 'evil-undo)           
 
 ;; Slurp / Barf
 
