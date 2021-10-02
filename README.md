@@ -154,11 +154,10 @@ Key  | Paredit State                 | Normal State    | Notes (mostly against N
 `f`  | `paredit-forward`             | `evil-find-char`| paredit-forward is much more important in this context
 `b`  | `paredit-backward`            | `evil-backward-word-begin` | Its natural to think of b as a sexp movement vs. a word movement
 `d`  | `paredit-forward-down`        | `evil-delete` | Deletion is fraught in Structured Editing, so I was okay with overriding it
-`w`  | `paredit-backward-up`         | `evil-undo` | This was a very difficult decision, ultimately I (currently) felt that moving up sexps is more important
-`q`  | `beginning-of-defun`          | `evil-append` | Given Paredit State's cursor movement functions more like insert state, append isn't that necessary IMO
+`w`  | `paredit-backward-up`         | `evil-forward-word-begin` | Movement by 'words' is done with f/b so I think okay to rebind this one
+`q`  | `beginning-of-defun`          | `evil-record-macro` | If you would like macro recording in Paredit State, you can rebind this (perhaps to 'a')
 `gn` | `paredit-forward-up`          | `evil-next-match` | I guess these means searching is better done in Normal mode, which sort of makes sense. Paredit state is more for manipulating sexps than for searching through them
 `gp` | `paredit-backward-down`       | Unbound | Free keybinding, so nothing to worry :-)
-`gu` | `evil-undo`                   | `evil-downcase` | Downcasing is probably not that relevant of a command within sexp manipulation, and it would be good to have undo in Paredit State 
 `(`  | `paredit-backward-slurp-sexp` | `evil-backward-sentence-begin` | Not as relevant when when manipulating sexps
 `)`  | `paredit-forward-slurp-sexp`  | `evil-forward-sentence-begin`  | Refer above
 `{`  | `paredit-backward-barf-sexp`  | `evil-backward-paragraph`      | Refer above
@@ -167,8 +166,8 @@ Key  | Paredit State                 | Normal State    | Notes (mostly against N
 `gl` | `paredit-splice-sexp`         | Unbound | Nice! :-)
 `gw` | `paredit-wrap-round`          | `evil-fill` | I have no idea what this does...
 `gh` | `paredit-recenter-on-sexp`    | Unbound | Awesome! :-)
-`gn` | `paredit-reindent-defun`      | Unbound | Fantastic! :-)
-`t`  | `transpose-sexps`             | `evil-find-char-to` | Not too fussed about this one as searching should be done in normal mode
+`gn` | `indent-region`               | `evil-next-match` | Not too fussed about this one as searching should be done in normal mode
+`t`  | `transpose-sexps`             | `evil-find-char-to` | Refer above
 `T`  | `transpose-sexps -1`          | `evil-find-char-to-backward` | Refer above
 `s`  | `Custom Sexp Cut`             | `evil-substitute` | This might be tricky, but for now I am okay (YMMV)
 `y`  | `Custom Sexp Copy`            | `evil-yank` | Here we are substituting yank with a more appropriate one for sexps
@@ -178,7 +177,7 @@ Key  | Paredit State                 | Normal State    | Notes (mostly against N
 
 
 ## Reliance on Evil Paredit
-Finally, it is useful to maintain reliance on Evil Paredit to provide some safety against accidentally breaking balanced parantheses whilst in Normal / Paredit State.
+Finally, it is useful to maintain reliance on Evil Paredit to provide some safety against accidentally breaking balanced parantheses whilst in Normal / Paredit State. There a few cases where it doesn't work as intended, so its on my list to make the overall bindings more safe.
 
 ```lisp
 (load "/path-to-evil-paredit/evil-paredit.el")
