@@ -56,10 +56,11 @@ Perhaps somewhat lesser known is that a reasonable amount of structural editing 
 
 
 # Reliance on Evil Paredit
-Finally, it is useful to maintain reliance on Evil Paredit to provide some safety against accidentally breaking balanced parantheses whilst in Normal / Paredit State. We do that with the below (noting that you need to also download the Evil Paredit package if you are building this file from scratch, however I have bundled everything into `parevil.el`).
+Finally, it is useful to maintain reliance on Evil Paredit to provide some safety against accidentally breaking balanced parantheses whilst in Normal / Paredit State. We do that with the below (noting that you need to also download the Evil Paredit package if you are building your bindings from scratch).
 
 ```lisp
 (load "/path-to-evil-paredit/evil-paredit.el")
+
 (add-hook 'emacs-lisp-mode-hook 'evil-paredit-mode)
 (add-hook 'lisp-mode-hook 'evil-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'evil-paredit-mode)
@@ -67,7 +68,7 @@ Finally, it is useful to maintain reliance on Evil Paredit to provide some safet
 (add-hook 'slime-repl-mode-hook 'evil-paredit-mode)
 ```
 
-As just mentioned, all of the above code has been bundled into `parevil.el`, and you simply need to add the below to your `.emacs` after downloading ParEvil.
+But don't worry, Evil Paredit and all of the above code has been bundled into `parevil.el`, and you simply need to add the below to your `.emacs` after downloading ParEvil to use it.
 
 ```lisp
 ;; Add the below to your .emacs to use ParEvil and then evaluate it
