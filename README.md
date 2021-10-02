@@ -43,20 +43,34 @@ Modifying the standard bindings of VIM would be a foolish endeavour, and we will
 As a starting point, our new mode inherits all of the keybindings from Normal mode. We then introduce the following bindings specific for ParEdit commands.
 
 ```lisp
-(define-key evil-paredit-state-map "f" 'paredit-forward)                       ;; C-M-f    paredit-forward
-(define-key evil-paredit-state-map "b" 'paredit-backward)                      ;; C-M-b    paredit-backward
-(define-key evil-paredit-state-map "d" 'paredit-forward-down)                  ;; C-M-d    paredit-forward-down
-(define-key evil-paredit-state-map "w" 'paredit-backward-up)                   ;; C-M-u    paredit-backward-up
-(define-key evil-paredit-state-map "n" 'paredit-forward-up)                    ;; C-M-n    paredit-forward-up
-(define-key evil-paredit-state-map "gp" 'paredit-backward-down)                ;; C-M-p    paredit-backward-down     
-(define-key evil-paredit-state-map "(" 'paredit-backward-slurp-sexp)           ;; C-(      paredit-backward-slurp-sexp    
-(define-key evil-paredit-state-map ")" 'paredit-forward-slurp-sexp)            ;; C-)      paredit-forward-slurp-sexp
-(define-key evil-paredit-state-map "{" 'paredit-backward-barf-sexp)            ;; C-{      paredit-backward-barf-sexp
-(define-key evil-paredit-state-map "}" 'paredit-forward-barf-sexp)             ;; C-}      paredit-forward-barf-sexp
-(define-key evil-paredit-state-map "q" 'beginning-of-defun)                    ;; C-M-a    beginning-of-defun
-(define-key evil-paredit-state-map "gr" 'paredit-wrap-round)                   ;; M-(      Paredit Wrap Around
-(define-key evil-paredit-state-map "J" 'paredit-join-sexps)                    ;; M-J      Paredit Join Sexps
-(define-key evil-paredit-state-map "gs" 'paredit-split-sexp)                   ;; M-S      Paredit Split Sexps
+;; Motion Commands
+
+(define-key evil-paredit-state-map "f" 'paredit-forward)                 ;; C-M-f    paredit-forward
+(define-key evil-paredit-state-map "b" 'paredit-backward)                ;; C-M-b    paredit-backward
+(define-key evil-paredit-state-map "d" 'paredit-forward-down)            ;; C-M-d    paredit-forward-down
+(define-key evil-paredit-state-map "u" 'paredit-backward-up)             ;; C-M-u    paredit-backward-up
+(define-key evil-paredit-state-map "n" 'paredit-forward-up)              ;; C-M-n    paredit-forward-up
+(define-key evil-paredit-state-map "gp" 'paredit-backward-down)          ;; C-M-p    paredit-backward-down
+(define-key evil-paredit-state-map "a" 'beginning-of-defun)              ;; C-M-a    beginning-of-defun
+
+;; Alternate Undo
+
+(define-key evil-paredit-state-map "gu" 'evil-undo)           
+
+;; Slurp / Barf
+
+(define-key evil-paredit-state-map "(" 'paredit-backward-slurp-sexp)     ;; C-(      paredit-backward-slurp-sexp    
+(define-key evil-paredit-state-map ")" 'paredit-forward-slurp-sexp)      ;; C-)      paredit-forward-slurp-sexp
+(define-key evil-paredit-state-map "{" 'paredit-backward-barf-sexp)      ;; C-{      paredit-backward-barf-sexp
+(define-key evil-paredit-state-map "}" 'paredit-forward-barf-sexp)       ;; C-}      paredit-forward-barf-sexp
+
+;; Other Commands
+
+(define-key evil-paredit-state-map "gr" 'paredit-raise-sexp)             ;; M-r      paredit-raise-sexp
+(define-key evil-paredit-state-map "gs" 'paredit-splice-sexp)            ;; M-s      paredit-splice-sexp
+(define-key evil-paredit-state-map "gw" 'paredit-wrap-round)             ;; M-(      Paredit Wrap Around
+(define-key evil-paredit-state-map "gh" 'paredit-recenter-on-sexp) 
+(define-key evil-paredit-state-map "g/" 'paredit-reindent-defun)
 ```
 
 
