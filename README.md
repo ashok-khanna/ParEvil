@@ -44,6 +44,14 @@ As a starting point, our new mode inherits all of the keybindings from Normal mo
 ```
 
 
+# Comparing vs. Normal Mode - What did we break?
+The above keybindings override the Normal mode keybindings when in Paredit State. Whilst that is not too much an issue as normal mode is simply one `spacebar` away, it is prudent to review what we are overriding. Below is my current reasoning for each override.
+
+Key | Paredit State | Normal State | Notes
+--- | ------------- | ------------ | ----------
+`f` | `paredit-forward` | `find-char`| find-char is not that commonly used vs. paredit-forward
+
+
 # Additional Features
 Perhaps somewhat lesser known is that a reasonable amount of structural editing commands are actually built directly into Emacs[^10]. We add the following keybindings to the above mix.
 
