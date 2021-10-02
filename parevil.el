@@ -224,11 +224,11 @@ of the block."
 (defun evil-paredit-normal-state-local-map ()
   (define-key evil-normal-state-local-map (kbd "SPC") (lambda () (interactive) (evil-paredit-state))))
 
-(add-hook 'emacs-lisp-mode-hook 'evil-paredit-normal-state-lcaol-map)
-(add-hook 'lisp-mode-hook 'evil-paredit-normal-state-lcaol-map)
-(add-hook 'lisp-interaction-mode-hook 'evil-paredit-normal-state-lcaol-map)
-(add-hook 'scheme-mode-hook 'evil-paredit-normal-state-lcaol-map)
-(add-hook 'slime-repl-mode-hook 'evil-paredit-normal-state-lcaol-map)
+(add-hook 'emacs-lisp-mode-hook 'evil-paredit-normal-state-local-map)
+(add-hook 'lisp-mode-hook 'evil-paredit-normal-state-local-map)
+(add-hook 'lisp-interaction-mode-hook 'evil-paredit-normal-state-local-map)
+(add-hook 'scheme-mode-hook 'evil-paredit-normal-state-local-map)
+(add-hook 'slime-repl-mode-hook 'evil-paredit-normal-state-local-map)
 
 
 ;; Lisp Keys
