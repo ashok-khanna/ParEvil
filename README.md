@@ -6,7 +6,7 @@
 
 ParEdit[^1] is one of the oldest and most famous structural editing tools for the Lisp-family of languages, and one that I felt most comfortable with (whether it be its classic design or simply muscle memory). It is perfectly viable for use in Evil Mode, particularly with the assistance of Evil Paredit[^2] to avoid accidental breakage of parentheses parity.
 
-However, key sequences without modifiers feel much more natural in VIM / Evil Mode, and my aim has been to find a set of keybindings that will allow for a more natural integration of ParEdit with Evil Mode. Indeed, whilst there are many other excellent packages which aim to do this (see Lispy[^3], Lispyville[^4], Smartparens[^5], Evil Cleverparens[^6], Symex[^7], and more[^8]), it wouldn't be Emacs if we didn't reinvest the wheel and end up writing our own keybinds.
+However, key sequences without modifiers feel much more natural in VIM / Evil Mode, and my aim has been to find a set of keybindings that will allow for a more natural integration of ParEdit with Evil Mode. Indeed, whilst there are many other excellent packages which aim to do this (see Lispy[^3], Lispyville[^4], Smartparens[^5], Evil Cleverparens[^6], Symex[^7], and more[^8]), it wouldn't be Emacs if we didn't reinvent the wheel and end up writing our own keybinds.
 
 Thus, herein, is my current approach to structural editing within Evil Mode. You can download and load `parevil.el` into your Emacs configuration and feel free to send through any comments & suggestions.
 
