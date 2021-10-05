@@ -38,7 +38,7 @@ Key  | Function in Paredit State     | Key  | Function in Paredit State
 Note that the some of the above commands accept numeric prefix arguments. For example, we can move 4 sexps forward with `4f`.
 
 ## Note on Uncommon Features
-Perhaps somewhat lesser known is that a reasonable amount of structural editing commands are actually built directly into Emacs[^10]. One such command is `transpose-sexps` which we add with the following. The trick to transposing is to have your cursor right after an sexp that you wish to transpose with the one before or after it.
+One command not found directly in ParEdit is `transpose-sexps`[^10] which we add with the following. The trick to transposing is to have your cursor right after an sexp that you wish to transpose with the one before or after it.
 
 ```lisp
 ;; Accepts numeric prefix argument
@@ -50,34 +50,7 @@ Perhaps somewhat lesser known is that a reasonable amount of structural editing 
 (define-key evil-paredit-state-map "T" (lambda () (interactive) (transpose-sexps -1)))
 ```
 
-Separately, we modify cut / copy / paste with the following to allow for single keystroke cuts & copies and also to fix the paste behaviour due to working before/after point (in paredit state) vs. on point (in normal mode). Note that we can cut / copy multiple lines with numeric prefixes such as `3s` and `3y` to cut or copy 3 lines respectively.
-
-```lisp
-(define-key evil-paredit-state-map "sd"
-  (lambda (arg)
-    (interactive "p")
-    (mark-sexp arg)
-    (kill-region (mark) (point) 'region)))
-
-;; Single Keystroke Copy
-
-(define-key evil-paredit-state-map "sy"
-  (lambda (arg)
-    (interactive "p")
-    (mark-sexp arg)
-    (kill-ring-save (mark) (point) 'region)
-    (message "Copied sexps")))  
-
-;; Fix pasting in evil-paredit-state
-
-(define-key evil-paredit-state-map "p"
-  (lambda ()
-    (interactive)
-    (evil-paste-before 1)
-    (forward-char 1)))
-```
-
-Finally, we have added the following new functions to cut / copy all expressions within a group (from the cursor onwards). These hopefully should work okay, but let me know any unintended behaviour.
+We also added the following new functions to cut / copy all expressions within a group (from point onwards). These hopefully should work okay, but let me know any unintended behaviour.
 
 ```lisp
 ;; Cut all remaining expressions in a group
