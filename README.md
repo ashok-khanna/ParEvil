@@ -18,13 +18,13 @@ Thus, herein, is my current approach to structural editing within Evil Mode. You
 ```
 
 ## Summary
-ParEvil adds an additional state (***Paredit State***) to Evil Mode, which can be accessed (and exited from) by pressing `spacebar` when within Normal mode. Below are the keybindings offered in Paredit State. You can edit these easily! The main idea is having the additional state for lisp editing, the keybindings are of personal preference.
+ParEvil adds an additional state (***Paredit State***) to Evil Mode, which can be accessed (and exited from) by pressing `spacebar` when within Normal mode. Below are the keybindings offered in Paredit State.
 
 Key  | Function in Paredit State     | Key  | Function in Paredit State 
 ---- | ----------------------------- | ---- | ----------
 `f`  | `paredit-forward`             | `(`  | `paredit-backward-slurp-sexp`
 `b`  | `paredit-backward`            | `)`  | `paredit-forward-slurp-sexp`
-`e`  | `paredit-forward-down`        | `{`  | `paredit-backward-barf-sexp`
+`d`  | `paredit-forward-down`        | `{`  | `paredit-backward-barf-sexp`
 `w`  | `paredit-backward-up`         | `}`  | `paredit-forward-barf-sexp`
 `q`  | `beginning-of-defun`          | `gr` | `paredit-raise-sexp`
 `n` | `paredit-forward-up`           | `gl` | `paredit-splice-sexp` 
@@ -67,7 +67,7 @@ As a starting point, our new mode inherits all of the keybindings from Normal mo
 
 (define-key evil-paredit-state-map "f" 'paredit-forward)                 ;; C-M-f    paredit-forward
 (define-key evil-paredit-state-map "b" 'paredit-backward)                ;; C-M-b    paredit-backward
-(define-key evil-paredit-state-map "e" 'paredit-forward-down)            ;; C-M-d    paredit-forward-down
+(define-key evil-paredit-state-map "d" 'paredit-forward-down)            ;; C-M-d    paredit-forward-down
 (define-key evil-paredit-state-map "w" 'paredit-backward-up)             ;; C-M-u    paredit-backward-up
 (define-key evil-paredit-state-map "n" 'paredit-forward-up)              ;; C-M-n    paredit-forward-up
 (define-key evil-paredit-state-map "gp" 'paredit-backward-down)          ;; C-M-p    paredit-backward-down
@@ -173,7 +173,7 @@ Key  | Paredit State                 | Normal State    | Notes (mostly against N
 ---- | ----------------------------- | --------------- | ----------
 `f`  | `paredit-forward`             | `evil-find-char`| Paredit-forward is much more important in this context
 `b`  | `paredit-backward`            | `evil-backward-word-begin` | Its natural to think of b as a sexp movement vs. a word movement
-`e`  | `paredit-forward-down`        | `evil-forward-word-end` | The letter 'e' doesn't make too much sense (I guess one could argue having w and e next to each other has up / down next to each other, but these are in opposite order vs. j and k. However, I realised I wanted to keep 'd' for deletion (especially dd) and since word navigation doesn't make sense in ParEdit mode, e was a leftover character to use that minimises breaking other things
+`d`  | `paredit-forward-down`        | `evil-delete` | Deletion is fraught in Structured Editing, so I was okay with overriding it
 `w`  | `paredit-backward-up`         | `evil-forward-word-begin` | Movement by sexp / words is done with f/b so I think okay to rebind this one
 `q`  | `beginning-of-defun`          | `evil-record-macro` | If you would like macro recording in Paredit State, you can rebind this (perhaps to 'a')
 `n` | `paredit-forward-up`           | `evil-search-next` | I guess these means searching is better done in Normal mode, which sort of makes sense. Paredit state is more for manipulating sexps than for searching through them
