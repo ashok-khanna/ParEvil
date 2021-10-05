@@ -18,7 +18,7 @@ Thus, herein, is my current approach to structural editing within Evil Mode. You
 ```
 
 ## Summary
-ParEvil adds an additional state (***Paredit State***) to Evil Mode, which can be accessed (and exited from) by pressing `spacebar` when within Normal mode. Below are the keybindings offered in Paredit State.
+ParEvil adds an additional state (***Paredit State***) to Evil Mode, which can be accessed (and exited from) by pressing `spacebar` when within Normal mode. Below are the keybindings offered in Paredit State. You can edit these easily! The main idea is having the additional state for lisp editing, the keybindings are of personal preference.
 
 Key  | Function in Paredit State     | Key  | Function in Paredit State 
 ---- | ----------------------------- | ---- | ----------
