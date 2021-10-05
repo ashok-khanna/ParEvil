@@ -1,5 +1,5 @@
 # ParEvil
-*An experimental set of keybindings to integrate ParEdit into Evil Mode*
+*An experimental set of keybindings to integrate ParEdit into Evil Mode. The general concept IMO is good (a separate 'Paredit State'), the keybindings however are personal preference and even for me in a state of flux. No perfect solution, but see what works best for you and customise to your hearts content :-)*
 
 
 **Last Updated: 2 October 2021**
@@ -17,82 +17,27 @@ Thus, herein, is my current approach to structural editing within Evil Mode. You
 (load "/path-to-parevil/parevil.el)
 ```
 
-## Summary
-ParEvil adds an additional state (***Paredit State***) to Evil Mode, which can be accessed (and exited from) by pressing `spacebar` when within Normal mode. Below are the keybindings offered in Paredit State.
+## ParEvil Summary
+Modifying the standard bindings of VIM would be a foolish endeavour, and we will not do so as a starting principle. Rather, we create a new mode (***Paredit State***) as follows, which we can toggle from and to Normal Mode by pressing `spacebar`. Note that we only bind `spacebar` within Normal mode for lisp-related major modes, so you are free to bind `spacebar` to something else for other major modes. As a starting point, our new mode inherits all of the keybindings from Normal mode. We then introduce the following bindings specific for common ParEdit commands. Any ParEdit command not listed below can be accessed by its default keybinding.
 
 Key  | Function in Paredit State     | Key  | Function in Paredit State 
 ---- | ----------------------------- | ---- | ----------
 `f`  | `paredit-forward`             | `(`  | `paredit-backward-slurp-sexp`
 `b`  | `paredit-backward`            | `)`  | `paredit-forward-slurp-sexp`
-`d`  | `paredit-forward-down`        | `{`  | `paredit-backward-barf-sexp`
+`n`  | `paredit-forward-down`        | `{`  | `paredit-backward-barf-sexp`
 `w`  | `paredit-backward-up`         | `}`  | `paredit-forward-barf-sexp`
 `q`  | `beginning-of-defun`          | `gr` | `paredit-raise-sexp`
-`n` | `paredit-forward-up`           | `gl` | `paredit-splice-sexp` 
+`gn` | `paredit-forward-up`          | `gl` | `paredit-splice-sexp` 
 `gp` | `paredit-backward-down`       | `gw` | `paredit-wrap-round`
 `gh` | `paredit-recenter-on-sexp`    | `gn` | `indent-region`    
 `t`  | `transpose-sexps`             | `T`  | `transpose-sexps -1`
-`s`  | `Custom Sexp Cut`             | `y`  | `Custom Sexp Copy` 
+`p`  | `Custom Paste`                | 'se' | `mark-sexp` (i.e. select sexp)
+`sd` | `Custom Sexp Cut`             | `sy` | `Custom Sexp Copy` 
 `gs` | `Custom Multi Cut`            | `gy` | `Custom Multi Copy` 
-`p`  | `Custom Paste`   
+ 
+Note that the some of the above commands accept numeric prefix arguments. For example, we can move 4 sexps forward with `4f`.
 
-
-## Introduction
-Modifying the standard bindings of VIM would be a foolish endeavour, and we will not do so as a starting principle. Rather, we create a new mode (***Paredit State***) as follows, which we can toggle from and to Normal Mode by pressing `spacebar`. Note that we only bind `spacebar` within Normal mode for lisp-related major modes, so you are free to bind `spacebar` to something else for other major modes.
-
-```lisp
-;; Define Paredit State
-
-(evil-define-state paredit
-  "Paredit state."
-  :tag " <P> "
-  :enable (normal)
-  :cursor (bar . 1))
-  
-  
-;; Manage Normal / Paredit States
-
-(define-key evil-paredit-state-map [escape] (lambda () (interactive) (evil-normal-state)))
-(define-key evil-paredit-state-map (kbd "SPC") (lambda () (interactive) (evil-normal-state)))
-
-(defun evil-paredit-normal-state-local-map ()
-  (define-key evil-normal-state-local-map (kbd "SPC") (lambda () (interactive) (evil-paredit-state))))
-
-```
-
-## Standard Keybindings
-As a starting point, our new mode inherits all of the keybindings from Normal mode. We then introduce the following bindings specific for common ParEdit commands. Any ParEdit command not listed below can be accessed by its default keybinding.
-
-```lisp
-;; Motion Commands
-
-(define-key evil-paredit-state-map "f" 'paredit-forward)                 ;; C-M-f    paredit-forward
-(define-key evil-paredit-state-map "b" 'paredit-backward)                ;; C-M-b    paredit-backward
-(define-key evil-paredit-state-map "d" 'paredit-forward-down)            ;; C-M-d    paredit-forward-down
-(define-key evil-paredit-state-map "w" 'paredit-backward-up)             ;; C-M-u    paredit-backward-up
-(define-key evil-paredit-state-map "n" 'paredit-forward-up)              ;; C-M-n    paredit-forward-up
-(define-key evil-paredit-state-map "gp" 'paredit-backward-down)          ;; C-M-p    paredit-backward-down
-(define-key evil-paredit-state-map "q" 'beginning-of-defun)              ;; C-M-a    beginning-of-defun
-
-;; Slurp / Barf
-
-(define-key evil-paredit-state-map "(" 'paredit-backward-slurp-sexp)     ;; C-(      paredit-backward-slurp-sexp    
-(define-key evil-paredit-state-map ")" 'paredit-forward-slurp-sexp)      ;; C-)      paredit-forward-slurp-sexp
-(define-key evil-paredit-state-map "{" 'paredit-backward-barf-sexp)      ;; C-{      paredit-backward-barf-sexp
-(define-key evil-paredit-state-map "}" 'paredit-forward-barf-sexp)       ;; C-}      paredit-forward-barf-sexp
-
-;; Other Commands
-
-(define-key evil-paredit-state-map "gr" 'paredit-raise-sexp)             ;; M-r      paredit-raise-sexp
-(define-key evil-paredit-state-map "gl" 'paredit-splice-sexp)            ;; M-s      paredit-splice-sexp
-(define-key evil-paredit-state-map "gw" 'paredit-wrap-round)             ;; M-(      Paredit Wrap Around
-(define-key evil-paredit-state-map "gh" 'paredit-recenter-on-sexp) 
-(define-key evil-paredit-state-map "gn" 'indent-region)
-```
-
-Note that the movement command above accept numeric prefix arguments. For example, we can move 4 sexps forward with `4f`.
-
-
-## Additional Features
+## Note on Uncommon Features
 Perhaps somewhat lesser known is that a reasonable amount of structural editing commands are actually built directly into Emacs[^10]. One such command is `transpose-sexps` which we add with the following. The trick to transposing is to have your cursor right after an sexp that you wish to transpose with the one before or after it.
 
 ```lisp
@@ -105,12 +50,10 @@ Perhaps somewhat lesser known is that a reasonable amount of structural editing 
 (define-key evil-paredit-state-map "T" (lambda () (interactive) (transpose-sexps -1)))
 ```
 
-We also modify cut / copy / paste with the following to allow for single keystroke cuts & copies and also to fix the paste behaviour due to working before/after point (in paredit state) vs. on point (in normal mode). Note that we can cut / copy multiple lines with numeric prefixes such as `3s` and `3y` to cut or copy 3 lines respectively.
+Separately, we modify cut / copy / paste with the following to allow for single keystroke cuts & copies and also to fix the paste behaviour due to working before/after point (in paredit state) vs. on point (in normal mode). Note that we can cut / copy multiple lines with numeric prefixes such as `3s` and `3y` to cut or copy 3 lines respectively.
 
 ```lisp
-;; Single Keystroke Cut
-
-(define-key evil-paredit-state-map "s"
+(define-key evil-paredit-state-map "sd"
   (lambda (arg)
     (interactive "p")
     (mark-sexp arg)
@@ -118,7 +61,7 @@ We also modify cut / copy / paste with the following to allow for single keystro
 
 ;; Single Keystroke Copy
 
-(define-key evil-paredit-state-map "y"
+(define-key evil-paredit-state-map "sy"
   (lambda (arg)
     (interactive "p")
     (mark-sexp arg)
@@ -133,7 +76,6 @@ We also modify cut / copy / paste with the following to allow for single keystro
     (evil-paste-before 1)
     (forward-char 1)))
 ```
-
 
 Finally, we have added the following new functions to cut / copy all expressions within a group (from the cursor onwards). These hopefully should work okay, but let me know any unintended behaviour.
 
@@ -163,59 +105,6 @@ Finally, we have added the following new functions to cut / copy all expressions
 	(evil-jump-item)
 	(setq ending-point (point)))
       (kill-ring-save starting-point ending-point))))
-```
-
-
-## Comparing vs. Normal Mode - What did we break?
-The above keybindings override the Normal mode keybindings when in Paredit State. Whilst that is not too much an issue as normal mode is simply one `spacebar` away, it is prudent to review what we are overriding. Below is my current reasoning for each override.
-
-Key  | Paredit State                 | Normal State    | Notes (mostly against Normal State)
----- | ----------------------------- | --------------- | ----------
-`f`  | `paredit-forward`             | `evil-find-char`| Paredit-forward is much more important in this context
-`b`  | `paredit-backward`            | `evil-backward-word-begin` | Its natural to think of b as a sexp movement vs. a word movement
-`d`  | `paredit-forward-down`        | `evil-delete` | Deletion is fraught in Structured Editing, so I was okay with overriding it
-`w`  | `paredit-backward-up`         | `evil-forward-word-begin` | Movement by sexp / words is done with f/b so I think okay to rebind this one
-`q`  | `beginning-of-defun`          | `evil-record-macro` | If you would like macro recording in Paredit State, you can rebind this (perhaps to 'a')
-`n` | `paredit-forward-up`           | `evil-search-next` | I guess these means searching is better done in Normal mode, which sort of makes sense. Paredit state is more for manipulating sexps than for searching through them
-`gp` | `paredit-backward-down`       | Unbound | Free keybinding, so nothing to worry :-)
-`(`  | `paredit-backward-slurp-sexp` | `evil-backward-sentence-begin` | Not as relevant when when manipulating sexps
-`)`  | `paredit-forward-slurp-sexp`  | `evil-forward-sentence-begin`  | Refer above
-`{`  | `paredit-backward-barf-sexp`  | `evil-backward-paragraph`      | Refer above
-`}`  | `paredit-forward-barf-sexp`   | `evil-forward-paragraph`       | Refer above
-`gr` | `paredit-raise-sexp`          | Unbound | Yay! :-)
-`gl` | `paredit-splice-sexp`         | Unbound | Nice! :-)
-`gw` | `paredit-wrap-round`          | `evil-fill` | I have no idea what this does...
-`gh` | `paredit-recenter-on-sexp`    | Unbound | Awesome! :-)
-`gn` | `indent-region`               | `evil-next-match` | Not too fussed about this one as searching should be done in normal mode
-`t`  | `transpose-sexps`             | `evil-find-char-to` | Refer above
-`T`  | `transpose-sexps -1`          | `evil-find-char-to-backward` | Refer above
-`s`  | `Custom Sexp Cut`             | `evil-substitute` | This might be tricky, but for now I am okay (YMMV)
-`y`  | `Custom Sexp Copy`            | `evil-yank` | Here we are substituting yank with a more appropriate one for sexps
-`p`  | `Custom Paste`                | `evil-paste-afer` | Similarly we are substituting for a more appropriate sexp paste
-`gs` | `Custom Multi-Cut`            | Unbound | We actually make this a command for both paredit and normal states
-`gy` | `Custom Multi-Copy`           | Unbound | Refer above
-
-
-## Reliance on Evil Paredit
-Finally, it is useful to maintain reliance on Evil Paredit to provide some safety against accidentally breaking balanced parantheses whilst in Normal / Paredit State. There a few cases where it doesn't work as intended, so its on my list to make the overall bindings more safe.
-
-```lisp
-(load "/path-to-evil-paredit/evil-paredit.el")
-
-(add-hook 'emacs-lisp-mode-hook 'evil-paredit-mode)
-(add-hook 'lisp-mode-hook 'evil-paredit-mode)
-(add-hook 'lisp-interaction-mode-hook 'evil-paredit-mode)
-(add-hook 'scheme-mode-hook 'evil-paredit-mode)
-(add-hook 'slime-repl-mode-hook 'evil-paredit-mode)
-```
-
-All of the above code has been bundled into `parevil.el`, and you simply need to add the below to your `.emacs` after downloading ParEvil to use it.
-
-```lisp
-;; Add the below to your .emacs to use ParEvil and then evaluate it
-;; Don't forget to save your .emacs!
-
-(load "/path-to-parevil/parevil.el)
 ```
 
 [^1]: Main Website: http://mumble.net/~campbell/emacs/paredit.el. Quick Reference: http://mumble.net/~campbell/emacs/paredit.html
