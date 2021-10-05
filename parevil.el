@@ -222,8 +222,9 @@ of the block."
 (evil-define-state paredit
   "Paredit state."
   :tag " <P> "
-  :enable (normal)
-  :cursor (bar . 1))
+  :enable (normal))
+
+(setq evil-paredit-state-cursor '(box "purple1"))
 
 
 ;; Escape & Lisp States
@@ -246,13 +247,20 @@ of the block."
 
 ;; Motion Commands
 
+(define-key evil-paredit-state-map "s" nil)
+
 (define-key evil-paredit-state-map "f" 'paredit-forward)                 ;; C-M-f    paredit-forward
 (define-key evil-paredit-state-map "b" 'paredit-backward)                ;; C-M-b    paredit-backward
-(define-key evil-paredit-state-map "d" 'paredit-forward-down)            ;; C-M-d    paredit-forward-down
+(define-key evil-paredit-state-map "n" 'paredit-forward-down)            ;; C-M-d    paredit-forward-down
 (define-key evil-paredit-state-map "w" 'paredit-backward-up)             ;; C-M-u    paredit-backward-up
-(define-key evil-paredit-state-map "n" 'paredit-forward-up)              ;; C-M-n    paredit-forward-up
+(define-key evil-paredit-state-map "gn" 'paredit-forward-up)             ;; C-M-n    paredit-forward-up
 (define-key evil-paredit-state-map "gp" 'paredit-backward-down)          ;; C-M-p    paredit-backward-down
 (define-key evil-paredit-state-map "q" 'beginning-of-defun)              ;; C-M-a    beginning-of-defun
+
+;; (define-key evil-paredit-state-map "w" (lambda ()
+;; 					 (interactive)
+;; 					 (forward-sexp 2)
+;; 					 (backward-sexp)))            ;; C-M-f    Go to beginning of next word
 
 ;; Slurp / Barf
 
@@ -267,7 +275,7 @@ of the block."
 (define-key evil-paredit-state-map "gl" 'paredit-splice-sexp)            ;; M-s      paredit-splice-sexp
 (define-key evil-paredit-state-map "gw" 'paredit-wrap-round)             ;; M-(      Paredit Wrap Around
 (define-key evil-paredit-state-map "gh" 'paredit-recenter-on-sexp) 
-(define-key evil-paredit-state-map "gn" 'indent-region)
+(define-key evil-paredit-state-map "ge" 'indent-region)
 
 ;; Transpose Sexps
 
@@ -283,9 +291,23 @@ of the block."
 ;; p is for prefix-arg
 
 
-;; Single Keystroke Cut
+;; Undo
 
-(define-key evil-paredit-state-map "s"
+(define-key evil-paredit-state-map "su"
+  (lambda (arg)
+    (interactive "p")
+    (evil-undo arg)))
+
+;; Select
+
+(define-key evil-paredit-state-map "se"
+  (lambda (arg)
+    (interactive "p")
+    (mark-sexp arg)))
+
+;; Cut
+
+(define-key evil-paredit-state-map "sd"
   (lambda (arg)
     (interactive "p")
     (mark-sexp arg)
@@ -293,7 +315,7 @@ of the block."
 
 ;; Single Keystroke Copy
 
-(define-key evil-paredit-state-map "y"
+(define-key evil-paredit-state-map "sy"
   (lambda (arg)
     (interactive "p")
     (mark-sexp arg)
