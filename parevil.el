@@ -293,10 +293,10 @@ of the block."
 
 ;; Undo
 
-(define-key evil-paredit-state-map "su"
-  (lambda (arg)
-    (interactive "p")
-    (evil-undo arg)))
+;; (define-key evil-paredit-state-map "su"
+;;   (lambda (arg)
+;;     (interactive "p")
+;;     (evil-undo arg)))
 
 ;; Select
 
@@ -313,7 +313,7 @@ of the block."
     (mark-sexp arg)
     (kill-region (mark) (point) 'region)))
 
-;; Single Keystroke Copy
+;; Copy
 
 (define-key evil-paredit-state-map "sy"
   (lambda (arg)
