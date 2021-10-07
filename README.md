@@ -2,7 +2,7 @@
 *An experimental set of keybindings to integrate ParEdit into Evil Mode. The general concept IMO is good (a separate 'Paredit State'), the keybindings however are personal preference and even for me in a state of flux. No perfect solution, but see what works best for you and customise to your hearts content :-)*
 
 
-**Last Updated: 6 October 2021**
+**Last Updated: 7 October 2021**
 
 ParEdit[^1] is one of the oldest and most famous structural editing tools for the Lisp-family of languages, and one that I felt most comfortable with (whether it be its classic design or simply muscle memory). It is perfectly viable for use in Evil Mode, particularly with the assistance of Evil Paredit[^2] to avoid accidental breakage of parentheses parity.
 
@@ -29,7 +29,7 @@ Key  | Function in Paredit State     | Key  | Function in Paredit State
 `q`  | `beginning-of-defun`          | `gr` | `paredit-raise-sexp`
 `gn` | `paredit-forward-up`          | `gl` | `paredit-splice-sexp` 
 `gp` | `paredit-backward-down`       | `gw` | `paredit-wrap-round`
-`gh` | `paredit-recenter-on-sexp`    | `gn` | `indent-region`    
+`gh` | `paredit-recenter-on-sexp`    | `ge` | `indent-region`    
 `t`  | `transpose-sexps`             | `T`  | `transpose-sexps -1`
 `p`  | `Custom Paste`                | `se` | `mark-sexp` (i.e. select sexp)
 `sd` | `Custom Sexp Cut`             | `sy` | `Custom Sexp Copy` 
