@@ -2,7 +2,7 @@
 *An experimental set of keybindings to integrate ParEdit into Evil Mode. The general concept IMO is good (a separate 'Paredit State'), the keybindings however are personal preference and even for me in a state of flux. No perfect solution, but see what works best for you and customise to your hearts content :-)*
 
 
-**Last Updated: 7 October 2021**
+**Last Updated: 8 October 2021**
 
 ParEdit[^1] is one of the oldest and most famous structural editing tools for the Lisp-family of languages, and one that I felt most comfortable with (whether it be its classic design or simply muscle memory). It is perfectly viable for use in Evil Mode, particularly with the assistance of Evil Paredit[^2] to avoid accidental breakage of parentheses parity.
 
@@ -22,8 +22,8 @@ Modifying the standard bindings of VIM would be a foolish endeavour, and we will
 
 Key  | Function in Paredit State     | Key  | Function in Paredit State 
 ---- | ----------------------------- | ---- | ----------
-`f`  | `paredit-forward`             | `(`  | `paredit-backward-slurp-sexp`
-`b`  | `paredit-backward`            | `)`  | `paredit-forward-slurp-sexp`
+`f`  | `paredit-forward`             | `sp` | `paredit-backward-slurp-sexp`
+`b`  | `paredit-backward`            | `sb` | `paredit-forward-slurp-sexp`
 `n`  | `paredit-forward-down`        | `{`  | `paredit-backward-barf-sexp`
 `w`  | `paredit-backward-up`         | `}`  | `paredit-forward-barf-sexp`
 `q`  | `beginning-of-defun`          | `gr` | `paredit-raise-sexp`
