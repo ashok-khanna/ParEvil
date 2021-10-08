@@ -249,7 +249,7 @@ of the block."
 ;; Lets Unbind s (evil-subsitute) to use it for various keys, and make it ss now
 
 (define-key evil-paredit-state-map "s" nil)
-(define-key evil-paredi-state-map "ss" 'evil-substitute)
+(define-key evil-paredit-state-map "ss" 'evil-substitute)
 
 ;; Motion Commands
 
