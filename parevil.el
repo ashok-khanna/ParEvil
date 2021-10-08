@@ -245,9 +245,13 @@ of the block."
 
 ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Expressions.html
 
-;; Motion Commands
+
+;; Lets Unbind s (evil-subsitute) to use it for various keys, and make it ss now
 
 (define-key evil-paredit-state-map "s" nil)
+(define-key evil-paredi-state-map "ss" 'evil-substitute)
+
+;; Motion Commands
 
 (define-key evil-paredit-state-map "f" 'paredit-forward)                 ;; C-M-f    paredit-forward
 (define-key evil-paredit-state-map "b" 'paredit-backward)                ;; C-M-b    paredit-backward
@@ -264,10 +268,19 @@ of the block."
 
 ;; Slurp / Barf
 
-(define-key evil-paredit-state-map "(" 'paredit-backward-slurp-sexp)     ;; C-(      paredit-backward-slurp-sexp    
-(define-key evil-paredit-state-map ")" 'paredit-forward-slurp-sexp)      ;; C-)      paredit-forward-slurp-sexp
-(define-key evil-paredit-state-map "{" 'paredit-backward-barf-sexp)      ;; C-{      paredit-backward-barf-sexp
-(define-key evil-paredit-state-map "}" 'paredit-forward-barf-sexp)       ;; C-}      paredit-forward-barf-sexp
+
+(define-key evil-paredit-state-map "sp" 'paredit-backward-slurp-sexp)       ;; C-(      paredit-backward-slurp-sexp    
+(define-key evil-paredit-state-map "sb" 'paredit-forward-slurp-sexp)        ;; C-)      paredit-forward-slurp-sexp
+;; (define-key evil-paredit-state-map "(" 'paredit-backward-slurp-sexp)     ;; C-(      paredit-backward-slurp-sexp    
+;; (define-key evil-paredit-state-map ")" 'paredit-forward-slurp-sexp)      ;; C-)      paredit-forward-slurp-sexp
+
+(define-key evil-paredit-state-map "{" 'paredit-backward-barf-sexp)         ;; C-{      paredit-backward-barf-sexp
+(define-key evil-paredit-state-map "}" 'paredit-forward-barf-sexp)          ;; C-}      paredit-forward-barf-sexp
+
+
+;; Fix M-. for ParEdit Mode (in Normal mode it is evil-repeat-pop-next)
+
+(define-key evil-paredit-state-map (kbd "M-.") 'xref-find-definitions)      ;; Previously evil-repeat-pop-next 
 
 ;; Other Commands
 
@@ -329,4 +342,3 @@ of the block."
     (interactive)
     (evil-paste-before 1)
     (forward-char 1)))
-
