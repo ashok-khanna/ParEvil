@@ -1,5 +1,5 @@
 # ParEvil
-*An experimental set of keybindings to integrate ParEdit into Evil Mode. The general concept IMO is good (a separate 'Paredit State'), the keybindings however are personal preference and even for me in a state of flux. No perfect solution, but see what works best for you and customise to your hearts content :-)*
+*An experimental set of keybindings to integrate ParEdit into Evil Mode. The general concept IMO is good (a separate 'Paredit State'), the keybindings however are personal preference and I am constantly tweaking them myself. No perfect solution, but see what works best for you and customise to your hearts content :-)*
 
 
 **Last Updated: 8 October 2021**
