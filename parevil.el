@@ -271,8 +271,8 @@ of the block."
 
 (define-key evil-paredit-state-map "sp" 'paredit-backward-slurp-sexp)       ;; C-(      paredit-backward-slurp-sexp    
 (define-key evil-paredit-state-map "sb" 'paredit-forward-slurp-sexp)        ;; C-)      paredit-forward-slurp-sexp
-;; (define-key evil-paredit-state-map "(" 'paredit-backward-slurp-sexp)     ;; C-(      paredit-backward-slurp-sexp    
-;; (define-key evil-paredit-state-map ")" 'paredit-forward-slurp-sexp)      ;; C-)      paredit-forward-slurp-sexp
+(define-key evil-paredit-state-map "("  'paredit-open-round)                ;; (        Previously evil-search-word-forward
+(define-key evil-paredit-state-map ")" 'paredit-close-round)                ;; )        Previously evil-forward-sentence-begin 
 
 (define-key evil-paredit-state-map "{" 'paredit-backward-barf-sexp)         ;; C-{      paredit-backward-barf-sexp
 (define-key evil-paredit-state-map "}" 'paredit-forward-barf-sexp)          ;; C-}      paredit-forward-barf-sexp
